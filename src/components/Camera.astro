@@ -1,0 +1,61 @@
+---
+
+---
+
+<div class="camara w-full h-screen flex items-center justify-center overflow-hidden">
+    <video id="video" class="h-full absolute opacity-0" autoplay playsinline></video>
+    <canvas id="canvas" class="h-full block bg-black"></canvas>
+    <p id="error" style="color: red;"></p>
+</div>
+
+<script>
+    const startCamera = async () => {
+        const video = document.getElementById('video') as HTMLVideoElement;
+        const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+        const errorElement = document.getElementById('error');
+        const ctx = canvas.getContext('2d');
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: { min: 480 , ideal: 720, max: 720 },
+                    height: { min: 720, ideal: 1280, max: 1280},
+                    facingMode: 'user' // Para usar la cámara frontal
+                },
+                audio: true
+            });
+
+            video.srcObject = stream;
+            await video.play();
+
+            // Configurar dimensiones del canvas
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Función para dibujar frames
+            const drawFrame = () => {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    if (ctx) {
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    }
+                }
+                requestAnimationFrame(drawFrame);
+            };
+
+            drawFrame();
+            
+        } catch (err) {
+            console.error('Error al acceder a la cámara:', err);
+            if (errorElement) {
+                errorElement.textContent = 'Error al acceder a la cámara. Por favor, asegúrate de dar permisos.';
+            }
+        }
+    };
+
+    // Iniciar la cámara cuando el documento esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startCamera);
+    } else {
+        startCamera();
+    }
+</script>

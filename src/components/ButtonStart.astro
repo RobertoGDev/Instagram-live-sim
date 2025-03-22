@@ -1,0 +1,33 @@
+---
+import LiveButton from '@/src/assets/icons/live_button.png';
+import { Image } from 'astro:assets';
+---
+
+<style>
+    #btnStart:before {
+        content: '';
+        display: block;
+        height: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 110%;
+        padding-bottom: 105%;
+        background-color: transparent;
+        border-radius: 100%;
+        box-shadow: 0 0 0 0.3rem white;
+        z-index: 1;
+    }
+</style>
+
+<button id="btnStart" class="w-[90px] h-[88px] relative -top-[20px] e block rounded-full bg-text text-center text-zinc-600 cursor-pointer text-xl m-auto max-w-3/4">
+    <Image src={LiveButton} width={73} alt="button live" class="relative m-auto left-[-1.5px]" />
+</button>
+
+<script is:inline>
+    document.querySelector('#btnStart').addEventListener('click', async () => {
+        // Redirigir a la página de la cámara
+        window.location.href = '/live';
+    });
+</script>

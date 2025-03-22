@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import { users } from '@/src/data/users.js';
+import ButtonConfig from '@/src/components/ButtonConfig.astro';
+
+const randomNumber = Math.floor(Math.random() * 1000) + 1;
+
+const usersHeader = users.slice(0, 3);
+---
+
+<div class="buttons my-10 relative flex w-full items-center justify-between">
+    <div class="active-users grow-2 relative flex items-center justify-center">
+        <div class="profiles mr-3 flex flex-row-reverse">
+            {
+                usersHeader &&
+                    usersHeader.map((user, index) => (
+                        <span class="userImage relative -ml-1 w-[20px] h-[20px] flex items-center justify-center border-white border-1 rounded-full overflow-hidden" data-index={index}>
+                            <Image
+                                class="w-full h-full object-cover absolute top-1/2 left-1/2 transform -translate-1/2"
+                                src={user.profile_image}
+                                width={20}
+                                height={20}
+                                alt={`Avatar de ${user.nickname}`}
+                            />
+                        </span>
+                    ))
+            }
+        </div>
+        <span>
+            {randomNumber} seguidores activos ahora
+        </span>
+    </div>
+    <ButtonConfig />
+</div>

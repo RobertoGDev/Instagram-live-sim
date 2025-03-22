@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets';
+import close from '@/src/assets/icons/close.png';
+---
+
+<div class="close">
+    <a href="/">
+        <Image src={close} width={30} alt="Cerrar" />
+    </a>
+</div>
+
+<style>
+    .close a {
+        color: white;
+    }
+</style>
