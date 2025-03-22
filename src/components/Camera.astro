@@ -2,10 +2,10 @@
 
 ---
 
-<div class="camara w-full h-screen flex items-center justify-center overflow-hidden">
+<div class="camara fixed top-0 left-0 w-full h-full">
     <video id="video" class="h-full absolute opacity-0" autoplay playsinline></video>
-    <canvas id="canvas" class="h-full block bg-black"></canvas>
-    <p id="error" style="color: red;"></p>
+    <canvas id="canvas" class="h-full w-full object-cover block bg-black"></canvas>
+    <p id="error" class="absolute top-4 left-4 bg-red-500 text-white p-2 rounded"></p>
 </div>
 
 <script>
@@ -18,32 +18,45 @@
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: {
-                    width: { min: 480 , ideal: 720, max: 720 },
-                    height: { min: 720, ideal: 1280, max: 1280},
-                    facingMode: 'user' // Para usar la cámara frontal
+                    facingMode: 'user',
+                    width: 720 ,
+                    height: 1280
                 },
-                audio: true
+                audio: false
             });
 
             video.srcObject = stream;
             await video.play();
 
-            // Configurar dimensiones del canvas
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            // Ajustar canvas al tamaño de la pantalla
+            const resizeCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
             // Función para dibujar frames
             const drawFrame = () => {
                 if (video.readyState === video.HAVE_ENOUGH_DATA) {
                     if (ctx) {
-                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        // Calcular dimensiones para mantener la proporción y centrar
+                        const scale = Math.max(canvas.width / video.videoWidth, canvas.height / video.videoHeight);
+
+                        const videoWidth = video.videoWidth * scale;
+                        const videoHeight = video.videoHeight * scale;
+
+                        const x = (canvas.width - videoWidth) / 2;
+                        const y = (canvas.height - videoHeight) / 2;
+
+                        ctx.drawImage(video, x, y, videoWidth, videoHeight);
                     }
                 }
                 requestAnimationFrame(drawFrame);
             };
 
             drawFrame();
-            
         } catch (err) {
             console.error('Error al acceder a la cámara:', err);
             if (errorElement) {
