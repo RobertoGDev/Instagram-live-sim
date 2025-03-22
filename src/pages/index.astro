@@ -1,16 +1,22 @@
 ---
-
+import BaseLayout from '@/src/layouts/BaseLayout.astro';
+import HeaderHome from '@/src/components/HeaderHome.astro';
+import Camera from '@/src/components/Camera.astro';
+import ButtonStart from '@/src/components/ButtonStart.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+    <section class="relative grid grid-cols-6 grid-rows-[1fr_3fr_3fr_1fr] h-full overflow-hidden text-white bg-black">
+        <div class="absolute z-1 w-full col-start-1 col-span-6 row-start-1 flex flex-row px-4 justify-between items-center text-xl">
+            <HeaderHome />
+        </div>
+
+        <div class="col-start-2 col-span-4 row-start-4 row-span-4 flex flex-col justify-center items-center">
+            <ButtonStart />
+        </div>
+
+        <div class="col-start-1 col-span-6 row-start-1 row-span-3 text-xl h-full overflow-hidden rounded-b-xl">
+            <Camera />
+        </div>
+    </section>
+</BaseLayout>

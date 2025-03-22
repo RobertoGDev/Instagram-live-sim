@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import ojo from '@/src/assets/icons/Activity.png';
+import miAvatar from '@/src/assets/miavatar.jpg';
+---
+
+<div class="user my-10 w-full relative flex items-center">
+    <div class="flex flex-row justify-between items-center">
+        <span class="userImage bg-gray-800 rounded-full overflow-hidden relative w-12 flex items-center justify-center">
+            <Image src={miAvatar} width={40} alt="Avatar de usuario" class="object-cover w-10 h-10" />
+        </span>
+        <div class="text-ellipsis overflow-hidden w-full pl-2">dashed_to_darkness</div>
+    </div>
+</div>
+
+<div class="buttons my-10 w-full relative flex items-center">
+    <p class="bg-primary px-2 py-1 rounded-lg mr-4">Live</p>
+    <p class="bg-gray-600 text-white px-4 text-sm py-2 rounded-lg mr-4 flex items-center">
+        <span class="mr-2">
+            <Image src={ojo} width={30} alt="Avatar de usuario" class="object-cover w-4 h-4" />
+        </span>
+        <span id="randomViewers">0</span>
+    </p>
+</div>
+<div class="configuracion">X</div>
+

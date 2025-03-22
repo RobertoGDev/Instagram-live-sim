@@ -1,0 +1,15 @@
+---
+import config from '@/src/assets/icons/config.svg';
+---
+
+<div class="config">
+    <a href="#" class="text-white">
+        <img src={config.src} width={30} alt="Configuración" class="fill-current" />
+    </a>
+</div>
+
+<style>
+    .config img {
+        filter: invert(1); /* Esto convertirá el SVG a color blanco */
+    }
+</style>
